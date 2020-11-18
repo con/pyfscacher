@@ -170,10 +170,10 @@ class FileFingerprint(namedtuple("FileFingerprint", "mtime_ns ctime_ns size")):
 class DirFingerprint:
     def __init__(self):
         self.last_modified = None
-        self.tree_fprints = {}
+        self.tree_fprints = []
 
     def add_file(self, path, fprint: FileFingerprint):
-        self.tree_fprints[path] = fprint
+        self.tree_fprints.append((path, fprint))
         if self.last_modified is None or self.last_modified < fprint.mtime_ns:
             self.last_modified = fprint.mtime_ns
 
@@ -184,4 +184,4 @@ class DirFingerprint:
             return abs(time.time() - self.last_modified * 1e-9) < min_dtime
 
     def to_tuple(self):
-        return tuple(self.tree_fprints.items())
+        return tuple(self.tree_fprints)
