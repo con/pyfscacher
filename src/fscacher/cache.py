@@ -184,4 +184,4 @@ class DirFingerprint:
             return abs(time.time() - self.last_modified * 1e-9) < min_dtime
 
     def to_tuple(self):
-        return sum(sorted(self.tree_fprints.items()), ())
+        return tuple(self.tree_fprints.items())
